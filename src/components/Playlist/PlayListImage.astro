@@ -1,0 +1,15 @@
+---
+interface Props {
+  src: string;
+  title: string;
+  authors?: string;
+}
+
+const { src, title, authors } = Astro.props;
+---
+
+<img
+  src={src}
+  alt=`Cover of ${title} ${authors ? 'by '+ authors:''}`
+  class=`object-cover w-full h-full rounded-md`
+/>

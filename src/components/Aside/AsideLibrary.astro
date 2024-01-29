@@ -1,0 +1,16 @@
+---
+import LibraryIcon from "@/icons/Library.astro";
+import { playlists } from "@/lib/data";
+import AsideMenuItem from "./AsideMenuItem.astro";
+import PlayListAsideCard from "../Playlist/PlayListAsideCard.astro";
+---
+
+<div class="flex-1 bg-zinc-900 rounded-lg p-2">
+  <ul>
+    <AsideMenuItem href="/">
+      <LibraryIcon />
+      Your Library
+    </AsideMenuItem>
+    {playlists.map((playlist) => <PlayListAsideCard playlist={playlist} />)}
+  </ul>
+</div>
