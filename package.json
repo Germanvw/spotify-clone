@@ -1,0 +1,26 @@
+{
+  "name": "spotify",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.4.1",
+    "@astrojs/svelte": "^5.0.3",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "4.2.6",
+    "install": "^0.13.0",
+    "lucide-svelte": "^0.316.0",
+    "svelte": "^4.2.9",
+    "tailwind-merge": "^2.2.1",
+    "tailwind-variants": "^0.1.20",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "zustand": "^4.5.0"
+  }
+}

@@ -1,0 +1,30 @@
+---
+import type { IPlaylist } from "@/interfaces/music.interface";
+import PlaylistImage from "./PlayListImage.astro";
+import { adaptArtist } from "@/helpers/artist.helpers";
+
+interface Props {
+  playlist: IPlaylist;
+}
+
+const { playlist } = Astro.props;
+
+const { id, cover, title, artists } = playlist;
+
+const authors = adaptArtist(artists);
+---
+
+<a
+  href={`/playlist/${id}`}
+  class="playlist-item flex relative p-2 overflow-hidden items-center gap-5 rounded-md hover:bg-zinc-800"
+>
+  <picture class="h-12 w-12 flex-none">
+    <PlaylistImage src={cover} title={title} authors={authors} />
+  </picture>
+  <div class="flex flex-auto flex-col truncate">
+    <h4 class="text-sm text-white">{title}</h4>
+    <span class="text-xs text-gray-400">
+      {authors}
+    </span>
+  </div>
+</a>

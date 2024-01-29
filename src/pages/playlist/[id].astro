@@ -1,0 +1,78 @@
+---
+import { allPlaylists, songs } from "@/lib/data";
+import { getPlaylistDuration } from "@/helpers/duration.helpers";
+import { adaptArtist } from "@/helpers/artist.helpers";
+import Layout from "@/layouts/Layout.astro";
+import PlayListTable from "@/components/Table/PlayListTable.svelte";
+import CardPlayButton from "@/components/Playlist/CardPlayButton.svelte";
+
+const pageId = Astro.params.id!;
+
+const pagePlaylist = allPlaylists.find((playlist) => playlist.id === pageId)!;
+
+const pageSongs = songs.filter(
+  (song) => song.albumId === pagePlaylist.albumId
+)!;
+
+const authors = adaptArtist(pagePlaylist.artists);
+const totalDuration = getPlaylistDuration(
+  pageSongs.map((song) => song.duration)
+);
+---
+
+<Layout title={pagePlaylist.title ?? "Playlist"}>
+  <div
+    id="playlist-container"
+    class="relative flex flex-col h-full bg-zinc-900 overflow-x-hidden"
+    transition:name=`playlist-container-${pageId}`
+  >
+    <header class="flex flex-row gap-8 px-6 mt-12">
+      <picture class="aspect-square w-52 h-auto flex-none">
+        <img
+          src={pagePlaylist.cover}
+          alt={`Cover of ${pagePlaylist.title}`}
+          class="object-cover w-full h-full shadow-lg"
+          transition:name=`playlist-image-${pageId}`
+        />
+      </picture>
+      <div class="flex flex-col justify-between">
+        <h2 class="flex flex-1 items-end">Playlist</h2>
+        <div>
+          <h1
+            class="text-5xl font-bold block text-white"
+            transition:name=`playlist-title-${pageId}`
+          >
+            {pagePlaylist.title}
+          </h1>
+        </div>
+
+        <div class="flex-1 flex items-end">
+          <div class="text-sm text-gray-300 font-normal">
+            <div>
+              <span transition:name=`playlist-authors-${pageId}`>{authors}</span
+              >
+            </div>
+            <p class="mt-1">
+              <span class="text-white">{pageSongs.length} songs</span>, {
+                totalDuration
+              }
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="pl-6 pt-6">
+      <CardPlayButton client:load playlistId={pageId} />
+    </div>
+
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/80 -z-[1]"
+    >
+    </div>
+
+    <section class="p-6">
+      <PlayListTable client:load songs={pageSongs} playlist={pagePlaylist} />
+    </section>
+  </div>
+</Layout>
